@@ -16,7 +16,7 @@ module ConfigSL
     private
 
     def option_valid?(name)
-      valid = !options[name][:required] || !!get_value(name)
+      valid = !options[name][:required] || get_value(name)
       valid &&= options[name][:enum].include?(get_value(name)) if options[name][:enum]
 
       valid

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ConfigSL::DSL do
+RSpec.describe ConfigSL::Format do
   subject(:config) do
     FormatSpecConfig::Config.new(params)
   end
