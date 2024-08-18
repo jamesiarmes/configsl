@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/configsl/dsl'
-
 RSpec.describe ConfigSL::DSL do
   subject(:config) do
     DSLSpecConfig

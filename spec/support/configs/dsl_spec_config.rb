@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/configsl'
-
 class DSLSpecConfig
   include ConfigSL::DSL
 

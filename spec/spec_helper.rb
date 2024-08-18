@@ -20,4 +20,5 @@ RSpec.configure do |config|
 end
 
 # Include support files.
+require_relative '../lib/configsl'
 require_relative 'support/configs'

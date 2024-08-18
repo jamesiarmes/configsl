@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/configsl'
-
 class ValidationSpecConfig
   include ConfigSL::DSL
   include ConfigSL::Validation
