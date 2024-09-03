@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'dsl'
+require_relative 'file_format/json'
+require_relative 'file_format/yaml'
 require_relative 'format'
 require_relative 'from_environment'
 require_relative 'from_file'
