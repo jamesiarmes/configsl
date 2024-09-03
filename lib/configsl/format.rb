@@ -34,6 +34,8 @@ module ConfigSL
     end
 
     def set_value(name, value)
+      raise InvalidOptionError, "Option #{name} is not defined" unless options.key?(name)
+
       super(name, format_value(name, value))
     end
 
