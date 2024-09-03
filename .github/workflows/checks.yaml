@@ -1,0 +1,32 @@
+name: Code Checks
+
+on:
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: git fetch origin main --depth=1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: RuboCop Linter
+        run: bundle exec rubocop
+
+  spec:
+    runs-on: ubuntu-latest
+    env:
+      COVERAGE: 1
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rspec
