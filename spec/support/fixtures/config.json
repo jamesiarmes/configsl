@@ -1,0 +1,7 @@
+{
+    "format": "JSON",
+    "name": "config.json",
+    "nested": {
+        "title": "JSON file for testing"
+    }
+}

@@ -1,0 +1,4 @@
+format: YAML
+name: config.yaml
+nested:
+  title: YAML file for testing

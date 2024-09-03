@@ -22,3 +22,4 @@ end
 # Include support files.
 require_relative '../lib/configsl'
 require_relative 'support/configs'
+require_relative 'support/examples'
