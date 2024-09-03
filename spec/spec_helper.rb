@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'factory_bot'
-
 # Configure code coverage reporting.
 if ENV.fetch('COVERAGE', false)
+  require 'coveralls'
   require 'simplecov'
 
+  Coveralls.wear!
   SimpleCov.minimum_coverage 95
   SimpleCov.start do
     add_filter '/spec/'
@@ -13,6 +13,8 @@ if ENV.fetch('COVERAGE', false)
     track_files 'lib/**/*.rb'
   end
 end
+
+require 'factory_bot'
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
