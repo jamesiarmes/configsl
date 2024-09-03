@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][changelog], and this project adheres
 to [Semantic Versioning][versioning].
-
-## [Unreleased]
+ß
+## 1.0.0
 
 Initial release.
 

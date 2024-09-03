@@ -1,4 +1,4 @@
-# ConfigSL
+# ConfigSL [![Coverage Status][badge-coverage]][coverage]
 
 ConfigSL is a simple Domain-Specific Language (DSL) module for configuration.
 It is designed to provide a declarative way to define configuration, with as few
@@ -100,3 +100,6 @@ classes, they will need to be implemented in both.
 It's important to note that this is not limited to your defined configuration
 options, but also methods such as `register_file_format` and
 `config_file_path`.
+
+[badge-coverage]: https://coveralls.io/repos/github/jamesiarmes/configsl/badge.svg
+[coverage]: https://coveralls.io/github/jamesiarmes/configsl
