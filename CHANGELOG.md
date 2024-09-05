@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][changelog], and this project adheres
 to [Semantic Versioning][versioning].
-ß
+
+## [Unreleased]
+
+### Fixed
+
+- Subclasses of `ConfigSL::Config` initialized with sting keys no longer raise
+  an error.
+
 ## 1.0.0
 
 Initial release.

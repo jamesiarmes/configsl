@@ -19,7 +19,7 @@ module ConfigSL
 
     def initialize(params = {})
       params.each do |name, value|
-        set_value(name, value)
+        set_value(name.to_sym, value)
       end
     end
   end
