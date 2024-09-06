@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'configsl'
-  s.version     = '1.0.0'
+  s.version     = '1.0.1'
   s.licenses    = ['MIT']
   s.summary     = 'A simple DSL for declarative configuration in ruby.'
   s.description = 'A simple, modular, extensible DSL for configuration.'
