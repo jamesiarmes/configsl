@@ -1,4 +1,4 @@
-# ConfigSL [![Coverage Status][badge-coverage]][coverage]
+# ConfigSL [![Gem Version](https://badge.fury.io/rb/configsl.svg)](https://badge.fury.io/rb/configsl) [![Coverage Status][badge-coverage]][coverage]
 
 ConfigSL is a simple Domain-Specific Language (DSL) module for configuration.
 It is designed to provide a declarative way to define configuration, with as few

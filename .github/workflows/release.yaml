@@ -1,0 +1,23 @@
+name: Release Gem
+
+on:
+  push:
+    tags:
+        - '**'
+
+jobs:
+  release:
+    name: Release new version of ConfigSL
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - run: echo "Releasing configsl-${{ github.ref_name }}"
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Push to rubygems
+        uses: rubygems/release-gem@v1
