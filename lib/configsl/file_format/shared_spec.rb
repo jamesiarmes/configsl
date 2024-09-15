@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'a file format' do |filename, extensions, expected|
+shared_examples 'a file format' do |filename, extensions, expected|
   subject(:file) { described_class.new(path) }
 
   let(:path) { "spec/support/fixtures/#{filename}" }
