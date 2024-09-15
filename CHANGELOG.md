@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][changelog], and this project adheres
 to [Semantic Versioning][versioning].
 
+## [Unreleased]
+
+### Added
+
+- Exposed the shared example for file formats. Include it in your specs with:
+
+   ```ruby
+   require 'configsl/file_format/shared_spec'
+
+   RSpec.describe MyFileFormat do
+     it_behaves_like 'a file format', 'spec-config.json', %i[json], {
+       format: 'JSON',
+       name: 'config.json',
+       nested: { title: 'JSON file for testing' }
+     }
+   end
+   ```
+
 ## [1.0.1]
 
 ### Fixed
