@@ -9,6 +9,7 @@ to [Semantic Versioning][versioning].
 
 ### Added
 
+- Moved `ConfigSL::VERSION` to `configsl/version` for easier reference.
 - Exposed the shared example for file formats. Include it in your specs with:
 
    ```ruby

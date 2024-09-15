@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require_relative 'lib/configsl/version'
+
 Gem::Specification.new do |s|
   s.name        = 'configsl'
-  s.version     = '1.0.1'
+  s.version     = ConfigSL::VERSION
   s.licenses    = ['MIT']
   s.summary     = 'A simple DSL for declarative configuration in ruby.'
   s.description = 'A simple, modular, extensible DSL for configuration.'

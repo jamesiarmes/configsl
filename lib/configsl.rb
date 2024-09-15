@@ -1,7 +1,4 @@
 # frozen_string_literal: true
 
 require_relative 'configsl/config'
-
-module ConfigSL
-  VERSION = '1.0.1'
-end
+require_relative 'configsl/version'
