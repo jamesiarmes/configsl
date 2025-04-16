@@ -1,5 +1,7 @@
 require:
   - rubocop-factory_bot
+  - rubocop-md
+  - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
@@ -7,6 +9,9 @@ AllCops:
   NewCops: enable
   SuggestExtensions: true
   TargetRubyVersion: 3.2
+  Exclude:
+    - 'out/**/*'
+    - 'vendor/**/*'
 
 Metrics/MethodLength:
   CountAsOne:

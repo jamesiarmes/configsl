@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'collection'
 require_relative 'dsl'
 require_relative 'file_format/json'
 require_relative 'file_format/yaml'
@@ -16,6 +17,7 @@ module ConfigSL
     include FromEnvironment
     include FromFile
     include Validation
+    include Collection
 
     def initialize(params = {})
       params.each do |name, value|

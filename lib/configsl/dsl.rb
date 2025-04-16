@@ -46,7 +46,7 @@ module ConfigSL
     # If the option is not set, it will return the default value.
     #
     # @param name [Symbol] The name of the option.
-    # @return [Object] The value of the option.
+    # @return [Object, nil] The value of the option.
     #
     # @raise [InvalidOptionError] If the option is not defined.
     def get_value(name)
@@ -86,7 +86,7 @@ module ConfigSL
       # @param opts [Hash] The options for the option.
       # @return [void]
       def option(name, opts = {})
-        options.merge!({ name => opts })
+        options[name] = opts
         define_method(name) { get_value(name) }
       end
 
