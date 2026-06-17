@@ -52,7 +52,7 @@ module ConfigSL
     def get_value(name)
       raise InvalidOptionError, "Option #{name} is not defined" unless options.key?(name)
 
-      @params.fetch(name, options[name]&.[](:default))
+      configsl_params.fetch(name, options[name]&.[](:default))
     end
 
     # Sets the value of an option.
@@ -65,8 +65,14 @@ module ConfigSL
     def set_value(name, value)
       raise InvalidOptionError, "Option #{name} is not defined" unless options.key?(name)
 
-      @params ||= {}
-      @params[name] = value
+      configsl_params[name] = value
+    end
+
+    # Returns the params hash for the class of the current instance.
+    #
+    # @return [Hash] The params hash.
+    def configsl_params
+      @configsl_params ||= {}
     end
 
     # Required class methods for the config DSL.
