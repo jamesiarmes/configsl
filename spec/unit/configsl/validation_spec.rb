@@ -5,10 +5,7 @@ RSpec.describe ConfigSL::Validation do
     ValidationSpecConfig.new(params)
   end
 
-  valid_params = { required: 'rspec-config', enum: :two }.freeze
-  invalid_params = { required: nil, enum: :invalid }.freeze
-
-  let(:params) { valid_params }
+  let(:params) { ValidationSpecHelper.valid_params }
 
   describe '#valid?' do
     context 'when the configuration is valid' do
@@ -17,9 +14,9 @@ RSpec.describe ConfigSL::Validation do
       end
     end
 
-    invalid_params.each do |name, value|
+    ValidationSpecHelper.invalid_params.each do |name, value|
       context "when the #{name} option is invalid" do
-        let(:params) { valid_params.merge(name => value) }
+        let(:params) { ValidationSpecHelper.valid_params.merge(name => value) }
 
         it 'validates the configuration' do
           expect(config.valid?).to be(false)
@@ -35,9 +32,9 @@ RSpec.describe ConfigSL::Validation do
       end
     end
 
-    invalid_params.each do |name, value|
+    ValidationSpecHelper.invalid_params.each do |name, value|
       context "when the #{name} option is invalid" do
-        let(:params) { valid_params.merge(name => value) }
+        let(:params) { ValidationSpecHelper.valid_params.merge(name => value) }
 
         it 'validates the configuration' do
           expect { config.validate! }.to raise_error(ConfigSL::ValidationError)

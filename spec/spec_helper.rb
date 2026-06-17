@@ -25,3 +25,4 @@ end
 require_relative '../lib/configsl'
 require_relative 'support/configs'
 require_relative 'support/examples'
+require_relative 'support/helpers'
