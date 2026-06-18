@@ -13,9 +13,7 @@ group :development do
 end
 
 group :test do
-  # activesupport 7.2 introduces a breaking change that causes the specs to
-  # fail.
-  gem 'activesupport', '~> 8.1.3'
+  gem 'activesupport', '~> 8.1'
 
   gem 'coveralls_reborn', '~> 0.28'
   gem 'factory_bot', '~> 6.4'
