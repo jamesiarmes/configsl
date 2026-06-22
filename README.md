@@ -1,4 +1,4 @@
-# ConfigSL [![Gem Version](https://badge.fury.io/rb/configsl.svg)](https://badge.fury.io/rb/configsl) [![Coverage Status][badge-coverage]][coverage] [![Code Checks](https://github.com/jamesiarmes/configsl/actions/workflows/checks.yaml/badge.svg?branch=main)](https://github.com/jamesiarmes/configsl/actions/workflows/checks.yaml)
+# ConfigSL [![Gem Version][badge-version]][rubygems] [![Coverage Status][badge-coverage]][coverage] [![Code Checks][badge-checks]][checks]
 
 ConfigSL is a simple Domain-Specific Language (DSL) module for configuration.
 It is designed to provide a declarative way to define configuration, with as few
@@ -10,7 +10,7 @@ extensible, so you can use as little or as much as you need.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'configsl'
+gem 'configsl', '~> 1.0'
 ```
 
 And then execute:
@@ -37,6 +37,7 @@ You can start defining your configurations using two methods:
 The `ConfigSL::Config` base class includes common functionality for working with
 configurations. Currently, the class provides the following features:
 
+- **Collections**: Supports arrays and hashes of other configurations
 - **DSL**: The primary DSL for defining configuration options
 - **Format**: A simple way to enforce option value formatting
 - **FromEnvironment**: Load configuration from environment variables
@@ -47,13 +48,21 @@ configurations. Currently, the class provides the following features:
 require 'configsl'
 
 class AppConfig < ConfigSL::Config
-    register_file_format :json
-    register_file_format :yaml
+  register_file_format :json
+  register_file_format :yaml
 
-    option :name, type: String, default: 'My App'
-    option :environment, type: Symbol, enum: %i[dev test prod], default: :dev,
-                         env_variable: 'RACK_ENV'
-    option :database, type: DatabaseConfig, required: true
+  option :name, type: String, default: 'My App'
+  option :environment, type: Symbol, enum: %i[dev test prod], default: :dev,
+                       env_variable: 'RACK_ENV'
+  option :database, type: DatabaseConfig, required: true
+
+  # Collect arrays or hashes into configuration objects. Automatically set a key
+  # on the collected configurations based on their index (arrays) or key
+  # (hashes).
+  option :hosts, type: Hash, collection: { type: HostConfig, key: :hostname }
+
+  # Use shorthand syntax if you don't need to set a key.
+  option :plugins, type: Array, collection: PluginConfig
 end
 ```
 
@@ -70,19 +79,19 @@ that sets the configuration values by calling `set_value` for each option.
 require 'configsl'
 
 class ApplicationConfig
-    include ConfigSL::DSL
-    include ConfigSL::Format
-    include ConfigSL::FromEnvironment
+  include ConfigSL::DSL
+  include ConfigSL::Format
+  include ConfigSL::FromEnvironment
 
-    option :name, type: String, default: 'My App'
-    option :environment, type: Symbol, env_variable: 'RACK_ENV'
-    option :database, type: DatabaseConfig
+  option :name, type: String, default: 'My App'
+  option :environment, type: Symbol, env_variable: 'RACK_ENV'
+  option :database, type: DatabaseConfig
 
-    def initialize(params = {})
-      params.each do |name, value|
-        set_value(name, value)
-      end
+  def initialize(params = {})
+    params.each do |name, value|
+      set_value(name, value)
     end
+  end
 end
 ```
 
@@ -101,5 +110,9 @@ It's important to note that this is not limited to your defined configuration
 options, but also methods such as `register_file_format` and
 `config_file_path`.
 
+[badge-checks]: https://github.com/jamesiarmes/configsl/actions/workflows/checks.yaml/badge.svg?branch=main
 [badge-coverage]: https://coveralls.io/repos/github/jamesiarmes/configsl/badge.svg
+[badge-version]: https://badge.fury.io/rb/configsl.svg
+[checks]: https://github.com/jamesiarmes/configsl/actions/workflows/checks.yaml
 [coverage]: https://coveralls.io/github/jamesiarmes/configsl
+[rubygems]: https://rubygems.org/gems/configsl

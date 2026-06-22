@@ -46,11 +46,11 @@ module ConfigSL
     # If the option is not set, it will return the default value.
     #
     # @param name [Symbol] The name of the option.
-    # @return [Object] The value of the option.
+    # @return [Object, nil] The value of the option.
     #
     # @raise [InvalidOptionError] If the option is not defined.
     def get_value(name)
-      raise InvalidOptionError, "Option #{name} is not defined" unless options.key?(name)
+      configsl_option_exists!(name)
 
       configsl_params.fetch(name, options[name]&.[](:default))
     end
@@ -63,9 +63,20 @@ module ConfigSL
     #
     # @raise [InvalidOptionError] If the option is not defined.
     def set_value(name, value)
-      raise InvalidOptionError, "Option #{name} is not defined" unless options.key?(name)
+      configsl_option_exists!(name)
 
       configsl_params[name] = value
+    end
+
+    # Validates that an option exists for the current configuration class.
+    #
+    # @param name [Symbol] Name of the option to validate.
+    #
+    # @raise [InvalidOptionError] If the option is not defined.
+    def configsl_option_exists!(name)
+      return if options.key?(name)
+
+      raise InvalidOptionError, "Option #{name} is not defined"
     end
 
     # Returns the params hash for the class of the current instance.
@@ -86,7 +97,7 @@ module ConfigSL
       # @param opts [Hash] The options for the option.
       # @return [void]
       def option(name, opts = {})
-        options.merge!({ name => opts })
+        options[name] = opts
         define_method(name) { get_value(name) }
       end
 
