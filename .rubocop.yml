@@ -13,6 +13,10 @@ AllCops:
     - 'out/**/*'
     - 'vendor/**/*'
 
+Layout/InitialIndentation:
+  Exclude:
+    - '**/*.md'
+
 Metrics/MethodLength:
   CountAsOne:
     - array
@@ -31,3 +35,7 @@ RSpec/NestedGroups:
 RSpec/SpecFilePathFormat:
   CustomTransform:
     ConfigSL: configsl
+
+Style/OneClassPerFile:
+  Exclude:
+    - '**/*.md'
