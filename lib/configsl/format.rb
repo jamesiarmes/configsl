@@ -41,7 +41,7 @@ module ConfigSL
 
     # Formats a value based on its option definition.
     #
-    # @param option [String] Option whose value is being formatted.
+    # @param option [Symbol] Option whose value is being formatted.
     # @param value [Object] Value for the option.
     def format_value(option, value)
       return value if value.nil? || value.is_a?(options[option][:type])

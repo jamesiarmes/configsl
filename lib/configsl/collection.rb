@@ -72,7 +72,7 @@ module ConfigSL
 
     # Determines if an option is a collection.
     #
-    # @param option [String] Option to check.
+    # @param option [Symbol] Option to check.
     # @return [Boolean]
     def configsl_collection?(option)
       options[option].fetch(:collection, false) &&
@@ -81,7 +81,7 @@ module ConfigSL
 
     # Determines if the values in a collection have been collected.
     #
-    # @param option [String] Option being checked.
+    # @param option [Symbol] Option being checked.
     # @param values [Array, Hash] Values for the option.
     # @return [Boolean]
     def configsl_collected?(option, values)
@@ -93,7 +93,7 @@ module ConfigSL
 
     # Collects values into an appropriate collection.
     #
-    # @param option [String] Option whose values are being collected.
+    # @param option [Symbol] Option whose values are being collected.
     # @param values [Array, Hash] Values to collect.
     # @return [Array, Hash] Collected values as the defined type.
     #
@@ -110,7 +110,7 @@ module ConfigSL
 
     # Collect values for an array collection.
     #
-    # @param option [String] Option being processed.
+    # @param option [Symbol] Option being processed.
     # @param values [Array] Values to collect.
     # @return [Array] Collected values.
     def configsl_collect_array(option, values)
@@ -121,7 +121,7 @@ module ConfigSL
 
     # Collect values for a hash collection.
     #
-    # @param option [String] Option being processed.
+    # @param option [Symbol] Option being processed.
     # @param values [Hash] Values to collect.
     # @return [Hash] Collected values.
     def configsl_collect_hash(option, values)
@@ -132,7 +132,7 @@ module ConfigSL
 
     # Collect a single value to be added to the collection.
     #
-    # @param option [String] Option whose value is being collected.
+    # @param option [Symbol] Option whose value is being collected.
     # @param value [Object] The value to be added to the collection.
     # @return [Array, Hash]
     def configsl_collect_value(option, value, index = nil)

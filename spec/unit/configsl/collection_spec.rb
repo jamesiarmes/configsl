@@ -155,7 +155,7 @@ RSpec.describe ConfigSL::Collection do
       end
 
       it 'returns collected values' do
-        expect(config.send(:configsl_collect_values, :subhash, values)).to match(
+        expect(config.send(:format_value, :subhash, values)).to match(
           sub1: an_object_having_attributes(name: subconfigs[:sub1].name),
           sub2: an_object_having_attributes(name: subconfigs[:sub2].name)
         )

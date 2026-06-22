@@ -37,7 +37,7 @@ You can start defining your configurations using two methods:
 The `ConfigSL::Config` base class includes common functionality for working with
 configurations. Currently, the class provides the following features:
 
-- **Collections**: Supports arrays and hashes of other confiurations
+- **Collections**: Supports arrays and hashes of other configurations
 - **DSL**: The primary DSL for defining configuration options
 - **Format**: A simple way to enforce option value formatting
 - **FromEnvironment**: Load configuration from environment variables
