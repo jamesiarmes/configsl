@@ -1,4 +1,4 @@
-require:
+plugins:
   - rubocop-factory_bot
   - rubocop-md
   - rubocop-performance
@@ -23,6 +23,10 @@ RSpec/ExampleLength:
   CountAsOne:
     - array
     - hash
+
+# Prefer greater nesting depth for better organization.
+RSpec/NestedGroups:
+  Max: 6
 
 RSpec/SpecFilePathFormat:
   CustomTransform:
