@@ -37,6 +37,7 @@ You can start defining your configurations using two methods:
 The `ConfigSL::Config` base class includes common functionality for working with
 configurations. Currently, the class provides the following features:
 
+- **Collections**: Supports arrays and hashes of other confiurations
 - **DSL**: The primary DSL for defining configuration options
 - **Format**: A simple way to enforce option value formatting
 - **FromEnvironment**: Load configuration from environment variables
@@ -54,6 +55,14 @@ class AppConfig < ConfigSL::Config
   option :environment, type: Symbol, enum: %i[dev test prod], default: :dev,
                        env_variable: 'RACK_ENV'
   option :database, type: DatabaseConfig, required: true
+
+  # Collect arrays or hashes into configuration objects. Automatically set a key
+  # on the collected configurations based on their index (arrays) or key
+  # (hashes).
+  option :hosts, type: Hash, collection: { type: HostConfig, key: :hostname }
+
+  # Use shorthand syntax if you don't need to set a key.
+  option :plugins, type: Array, collection: PluginConfig
 end
 ```
 
