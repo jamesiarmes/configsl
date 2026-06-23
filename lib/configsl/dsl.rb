@@ -98,7 +98,9 @@ module ConfigSL
       # @return [void]
       def option(name, opts = {})
         options[name] = opts
+
         define_method(name) { get_value(name) }
+        define_method("#{name}=") { |val| set_value(name, val) }
       end
 
       # Returns the options hash for the class.
