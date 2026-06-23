@@ -16,6 +16,7 @@ module ToHashSpecConfig
     option :name, type: String
     option :index, type: Integer
     option :key, type: Symbol
+    option :recurse, type: self
   end
 
   class Config < Base

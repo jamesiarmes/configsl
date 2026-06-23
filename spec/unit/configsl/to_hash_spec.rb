@@ -21,7 +21,7 @@ RSpec.describe ConfigSL::ToHash do
     end
 
     context 'when a value is a nested config' do
-      let(:sub_config) { ToHashSpecConfig::Config.new(name: 'nested_name') }
+      let(:sub_config) { ToHashSpecConfig::SubConfig.new(name: 'nested_name') }
       let(:params) { { sub_config: sub_config } }
 
       it 'serializes the nested config' do
@@ -30,7 +30,7 @@ RSpec.describe ConfigSL::ToHash do
     end
 
     context 'when a value is an array' do
-      let(:sub_config) { ToHashSpecConfig::Config.new(name: 'nested_name') }
+      let(:sub_config) { ToHashSpecConfig::SubConfig.new(name: 'nested_name') }
 
       context 'with config objects' do
         let(:params) { { sub_configs_array: [sub_config] } }
@@ -58,7 +58,7 @@ RSpec.describe ConfigSL::ToHash do
     end
 
     context 'when a value is a hash' do
-      let(:sub_config) { ToHashSpecConfig::Config.new(name: 'nested_name') }
+      let(:sub_config) { ToHashSpecConfig::SubConfig.new(name: 'nested_name') }
 
       context 'with config objects' do
         let(:params) { { sub_configs_hash: { sub: sub_config } } }
@@ -81,6 +81,52 @@ RSpec.describe ConfigSL::ToHash do
 
         it 'returns an empty hash' do
           expect(config.to_h).to eq(sub_configs_hash: {})
+        end
+      end
+    end
+
+    context 'when values have deeply nested recursion' do
+      let(:nested_sub_config) { ToHashSpecConfig::SubConfig.new(name: 'deep_name') }
+      let(:sub_config) { ToHashSpecConfig::SubConfig.new(name: 'nested_name', recurse: nested_sub_config) }
+
+      context 'with nested config objects' do
+        let(:params) { { sub_config: sub_config } }
+
+        it 'serializes deeply nested configs recursively' do
+          expect(config.to_h).to eq(
+            sub_config: {
+              name: 'nested_name',
+              recurse: { name: 'deep_name' }
+            }
+          )
+        end
+      end
+
+      context 'with deeply nested arrays and hashes' do
+        let(:params) do
+          {
+            sub_configs_array: [
+              [sub_config]
+            ],
+            sub_configs_hash: {
+              outer: {
+                inner: sub_config
+              }
+            }
+          }
+        end
+
+        it 'serializes nested arrays and hashes recursively' do
+          expect(config.to_h).to eq(
+            sub_configs_array: [
+              [{ name: 'nested_name', recurse: { name: 'deep_name' } }]
+            ],
+            sub_configs_hash: {
+              outer: {
+                inner: { name: 'nested_name', recurse: { name: 'deep_name' } }
+              }
+            }
+          )
         end
       end
     end
