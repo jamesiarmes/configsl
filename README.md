@@ -42,6 +42,7 @@ configurations. Currently, the class provides the following features:
 - **Format**: A simple way to enforce option value formatting
 - **FromEnvironment**: Load configuration from environment variables
 - **FromFile**: Load configuration from a file
+- **ToHash**: Recursively convert the configuration to a hash
 - **Validation**: Built-in validation for configuration options
 
 ```ruby
