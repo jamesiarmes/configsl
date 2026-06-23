@@ -72,6 +72,19 @@ RSpec.describe ConfigSL::DSL do
     end
   end
 
+  describe '#set_value' do
+    subject(:instance) { config.new(required: 'rspec-config', enum: :two) }
+
+    it 'sets the value' do
+      instance.required = 'rspec-config-new'
+      expect(instance.required).to eq('rspec-config-new')
+    end
+
+    it 'raises an error for unknown options' do
+      expect { instance.unknown = 'rspec-config-new' }.to raise_error(NoMethodError)
+    end
+  end
+
   describe '#respond_to_missing?' do
     subject(:instance) { config.new(required: 'rspec-config', enum: :two) }
 
