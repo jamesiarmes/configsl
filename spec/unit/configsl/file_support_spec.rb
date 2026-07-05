@@ -15,15 +15,15 @@ RSpec.describe ConfigSL::FileSupport do
     end
   end
 
-  describe '.find_file_format' do
+  describe '.configsl_find_file_format' do
     { json: :json, yaml: :yaml, yml: :yaml }.each do |extension, format|
       it "finds the format for the #{extension} extension" do
-        expect(config.send(:find_file_format, extension.to_s)).to eq(format)
+        expect(config.configsl_find_file_format(extension.to_s)).to eq(format)
       end
     end
 
     it 'raises an error if the format is not found' do
-      expect { config.send(:find_file_format, 'txt') }.to \
+      expect { config.configsl_find_file_format('txt') }.to \
         raise_error(ConfigSL::FileFormatError)
     end
   end
@@ -47,20 +47,49 @@ RSpec.describe ConfigSL::FileSupport do
     end
   end
 
-  describe '.find_file' do
+  describe '.configsl_find_file' do
     it 'find the configuration files' do
-      expect(config.send(:find_file)).to \
+      expect(config.configsl_find_file).to \
         eq(%w[spec/support/fixtures/spec-config.yaml spec/support/fixtures/spec-config.json])
     end
 
     it 'finds the configuration file for a specific format' do
-      expect(config.send(:find_file, format: :json)).to \
+      expect(config.configsl_find_file(format: :json)).to \
         eq(['spec/support/fixtures/spec-config.json'])
     end
 
     it 'raises an error if the configuration file is not found' do
-      expect { config.send(:find_file, path: 'spec/support.json') }.to \
+      expect { config.configsl_find_file(path: 'spec/support.json') }.to \
         raise_error(ConfigSL::FileNotFoundError)
+    end
+  end
+
+  describe 'deprecated methods' do
+    around do |example|
+      original_verbose = $VERBOSE
+      $VERBOSE = true
+      original_deprecated = Warning[:deprecated]
+      Warning[:deprecated] = true
+      begin
+        example.run
+      ensure
+        $VERBOSE = original_verbose
+        Warning[:deprecated] = original_deprecated
+      end
+    end
+
+    describe '.find_file' do
+      it 'emits a deprecation warning and delegates to configsl_find_file' do
+        expect { config.send(:find_file) }.to \
+          output(/DEPRECATION WARNING: `find_file` is deprecated/i).to_stderr
+      end
+    end
+
+    describe '.find_file_format' do
+      it 'emits a deprecation warning and delegates to configsl_find_file_format' do
+        expect { config.send(:find_file_format, 'json') }.to \
+          output(/DEPRECATION WARNING: `find_file_format` is deprecated/i).to_stderr
+      end
     end
   end
 end

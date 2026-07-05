@@ -72,8 +72,6 @@ module ConfigSL
         @config_file_formats[format] = opts
       end
 
-      private
-
       # Find the configuration file based on the default path, name, and defined
       # formats.
       #
@@ -91,7 +89,7 @@ module ConfigSL
       #   provided, will only match files of the given format. Ignored if `path`
       #   is provided.
       # @return [Array<String>] Array of matching files.
-      def find_file(path: nil, format: nil)
+      def configsl_find_file(path: nil, format: nil)
         paths = Dir.glob(
           path.nil? ? "#{config_file_name}.{#{file_extensions(format:).join(',')}}" : path,
           base: path.nil? ? config_file_path : nil
@@ -109,7 +107,7 @@ module ConfigSL
       #
       # @raise [FileFormatError] If no file formats have been defined.
       # @raise [FileFormatError] If no file format is found for the extension.
-      def find_file_format(extension)
+      def configsl_find_file_format(extension)
         raise FileFormatError, 'No file formats have been defined' if @config_file_formats.nil?
 
         extension = extension.sub(/^\./, '').to_sym
@@ -118,6 +116,28 @@ module ConfigSL
         end
 
         raise FileFormatError, "No file format found for extension: #{extension}"
+      end
+
+      private
+
+      # Deprecated: Use configsl_find_file instead.
+      def find_file(path: nil, format: nil)
+        warn '[ConfigSL] DEPRECATION WARNING: ' \
+             '`find_file` is deprecated. ' \
+             'Use `configsl_find_file` instead. ' \
+             "Called from: #{caller(1..1).first}",
+             category: :deprecated
+        configsl_find_file(path:, format:)
+      end
+
+      # Deprecated: Use configsl_find_file_format instead.
+      def find_file_format(extension)
+        warn '[ConfigSL] DEPRECATION WARNING: ' \
+             '`find_file_format` is deprecated. ' \
+             'Use `configsl_find_file_format` instead. ' \
+             "Called from: #{caller(1..1).first}",
+             category: :deprecated
+        configsl_find_file_format(extension)
       end
     end
   end

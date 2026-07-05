@@ -21,6 +21,28 @@ module ConfigSL
       base.from_environment_prefix ''
     end
 
+    def self.configsl_source_name
+      :environment
+    end
+
+    # Loads the configuration parameters from environment variables.
+    #
+    # @param klass [Class] The class loading the configuration.
+    # @param opts [Hash] Options for loading the configuration.
+    # @option opts [Boolean] :defaults Whether to populate default values,
+    #   defaults to `true`
+    # @return [Hash] Loaded configuration parameters.
+    def self.configsl_load_params(klass, opts = {})
+      klass.options.each_with_object({}) do |(name, option_opts), hash|
+        env_var = option_opts[:env_variable] || name.to_s.upcase
+        if ENV.key?(env_var)
+          hash[name] = ENV[env_var]
+        elsif opts[:defaults]
+          hash[name] = option_opts[:default]
+        end
+      end
+    end
+
     # Class methods necessary for loading configuration from the environment.
     module ClassMethods
       # Set the prefix for environment variables.
@@ -34,10 +56,7 @@ module ConfigSL
       #
       # @return [self] The new config object
       def from_environment
-        params = options.transform_values do |opts|
-          ENV.fetch(opts[:env_variable], opts[:default])
-        end
-
+        params = FromEnvironment.configsl_load_params(self, defaults: true)
         new(params)
       end
 
