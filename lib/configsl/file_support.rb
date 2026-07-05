@@ -97,7 +97,7 @@ module ConfigSL
 
         raise FileNotFoundError, 'No configuration file found!' if paths.empty?
 
-        paths.map { |p| File.join(config_file_path, p) }
+        path.nil? ? paths.map { |p| File.join(config_file_path, p) } : paths
       end
 
       # Find the format for a file given its extension.

@@ -8,12 +8,22 @@ RSpec.describe ConfigSL::Merge do
     }
   end
 
-  before do
+  around do |example|
+    original_env = {}
+    env_vars.each_key do |k|
+      original_env[k] = ENV[k] if ENV.key?(k)
+    end
     ENV.merge!(env_vars)
-  end
 
-  after do
-    env_vars.each_key { |k| ENV.delete(k) }
+    example.run
+
+    env_vars.each_key do |k|
+      if original_env.key?(k)
+        ENV[k] = original_env[k]
+      else
+        ENV.delete(k)
+      end
+    end
   end
 
   describe 'strict parameter initialization with new' do

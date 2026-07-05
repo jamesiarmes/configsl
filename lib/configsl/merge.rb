@@ -75,7 +75,7 @@ module ConfigSL
 
       # Loads configuration data from all registered config sources.
       #
-      # If an explicit precendence has been defined, only sources confgured in
+      # If an explicit precedence has been defined, only sources configured in
       # the chain will be loaded.
       #
       # @param sources [Hash{Symbol => Hash}] Hash for loaded sources.
