@@ -3,7 +3,13 @@ name: Release Gem
 on:
   push:
     tags:
-        - '**'
+      - '**'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to release
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -14,13 +20,19 @@ jobs:
     name: Release new version of ConfigSL
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Releasing configsl-${{ github.ref_name }}"
+      - run: echo "Releasing configsl-${{ inputs.tag || github.ref_name }}"
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - name: Set up Ruby
         # v1.316.0
         uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
         with:
           bundler-cache: true
-      - name: Push to rubygems
-        # v1.4.0
-        uses: rubygems/release-gem@052cc82692552de3ef2b81fd670e41d13cba8092
+      - name: Configure RubyGems Credentials
+        # v2.1.0
+        uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a
+      - name: Build and Push Gem
+        run: |
+          gem build configsql.gemspec
+          gem push configsl-*.gem
