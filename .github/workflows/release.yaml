@@ -20,19 +20,17 @@ jobs:
     name: Release new version of ConfigSL
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Releasing configsl-${{ inputs.tag || github.ref_name }}"
+      - run: echo "Releasing configsl-${{ github.event.inputs.tag || github.ref_name }}"
       - uses: actions/checkout@v7
         with:
-          ref: ${{ inputs.tag || github.ref }}
+          ref: ${{ github.event.inputs.tag || github.ref }}
       - name: Set up Ruby
         # v1.316.0
         uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
-        with:
-          bundler-cache: true
       - name: Configure RubyGems Credentials
         # v2.1.0
         uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a
       - name: Build and Push Gem
         run: |
-          gem build configsql.gemspec
-          gem push configsl-*.gem
+          gem build configsql.gemspec -o configsl.gem
+          gem push configsl.gem
