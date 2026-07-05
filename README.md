@@ -10,7 +10,7 @@ extensible, so you can use as little or as much as you need.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'configsl', '~> 1.0'
+gem 'configsl', '~> 1.1'
 ```
 
 And then execute:
@@ -42,6 +42,7 @@ configurations. Currently, the class provides the following features:
 - **Format**: A simple way to enforce option value formatting
 - **FromEnvironment**: Load configuration from environment variables
 - **FromFile**: Load configuration from a file
+- **Merge**: Merge configuration from multiple sources
 - **ToHash**: Recursively convert the configuration to a hash
 - **Validation**: Built-in validation for configuration options
 
@@ -65,6 +66,16 @@ class AppConfig < ConfigSL::Config
   # Use shorthand syntax if you don't need to set a key.
   option :plugins, type: Array, collection: PluginConfig
 end
+```
+
+You can load your configuration from different sources using the following
+methods:
+
+```ruby
+AppConfig.new(params) # Load from parameters
+AppConfig.from_file # Load from a file
+AppConfig.from_environment # Load from environment variables
+AppConfig.load # Merge from multiple sources
 ```
 
 ### Including modules

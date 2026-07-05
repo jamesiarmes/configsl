@@ -7,6 +7,7 @@ require_relative 'file_format/yaml'
 require_relative 'format'
 require_relative 'from_environment'
 require_relative 'from_file'
+require_relative 'merge'
 require_relative 'to_hash'
 require_relative 'validation'
 
@@ -20,6 +21,7 @@ module ConfigSL
     include ToHash
     include Validation
     include Collection
+    include Merge
 
     def initialize(params = {})
       params.each do |name, value|
