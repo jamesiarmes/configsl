@@ -5,13 +5,14 @@ on:
     tags:
         - '**'
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   release:
     name: Release new version of ConfigSL
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
     steps:
       - run: echo "Releasing configsl-${{ github.ref_name }}"
       - uses: actions/checkout@v7
