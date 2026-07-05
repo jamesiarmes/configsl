@@ -17,8 +17,10 @@ jobs:
       - run: echo "Releasing configsl-${{ github.ref_name }}"
       - uses: actions/checkout@v7
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        # v1.316.0
+        uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
         with:
           bundler-cache: true
       - name: Push to rubygems
-        uses: rubygems/release-gem@v1
+        # v1.4.0
+        uses: rubygems/release-gem@052cc82692552de3ef2b81fd670e41d13cba8092
