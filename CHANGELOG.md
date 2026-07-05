@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][changelog], and this project adheres
 to [Semantic Versioning][versioning].
 
+## [1.1.1]
+
+### Fixed
+
+- Reported gem version
+
 ## [1.1.0]
 
 ### Added
