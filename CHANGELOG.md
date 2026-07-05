@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog][changelog], and this project adheres
 to [Semantic Versioning][versioning].
 
+## [1.1.0]
+
+### Added
+
+- Support collections of configuration objects with the new `Collection` module
+- Add `ToHash` module for converting configuration objects to hashes using
+  `to_h`
+- Create setter methods for options
+- Added `Merge` module to merge parameters from multiple sources
+
+### Fixed
+
+- Renamed `@params` to `@configsl_params` to avoid collisions
+- Add `configsl_` prefix to more methods to avoid conflicts
+
+### Deprecated
+
+- `FileSupport.find_file` is deprecated; use `configsl_find_file` instead
+- `FileSupport.find_file_format` is deprecated; use `configsl_find_file_format`
+  instead
+
 ## [1.0.2]
 
 ### Added
