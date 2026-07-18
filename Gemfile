@@ -17,9 +17,9 @@ end
 group :test do
   gem 'activesupport', '~> 8.1'
 
-  gem 'coveralls_reborn', '~> 0.28'
   gem 'factory_bot', '~> 6.5'
   gem 'rspec', '~> 3.13'
   gem 'rspec-github', '~> 3.0'
-  gem 'simplecov', '~> 0.22'
+  gem 'simplecov', '~> 1.0'
+  gem 'simplecov-cobertura', '~> 4.0'
 end
