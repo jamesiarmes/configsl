@@ -2,15 +2,16 @@
 
 # Configure code coverage reporting.
 if ENV.fetch('COVERAGE', false)
-  require 'coveralls'
   require 'simplecov'
+  require 'simplecov-cobertura'
 
-  Coveralls.wear!
+  SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter if ENV.fetch('CI', false)
+
   SimpleCov.minimum_coverage 95
   SimpleCov.start do
-    add_filter '/spec/'
+    skip '/spec/'
 
-    track_files 'lib/**/*.rb'
+    cover 'lib/**/*.rb'
   end
 end
 
