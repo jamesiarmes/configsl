@@ -1,7 +1,14 @@
 name: Code Checks
 
 on:
+  pull_request:
   push:
+    branches:
+      - main
+  schedule:
+    # Weekly, to catch breakage from ruby-head and dependencies.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,17 +30,28 @@ jobs:
 
   spec:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    continue-on-error: ${{ matrix.experimental || false }}
     strategy:
+      fail-fast: false
       matrix:
         ruby:
-          # Run tests against all supported Rubies.
+          # Run tests against all supported Rubies, plus the nightly build.
           # https://www.ruby-lang.org/en/downloads/branches/
           - "3.3"
           - "3.4"
           - "4.0"
+          - "head"
+        include:
+          # Only upload the coverage report for the lowest supported Ruby.
+          - ruby: "3.3"
+            upload: true
+          # Nightly builds may fail through no fault of ours.
+          - ruby: "head"
+            experimental: true
     env:
       COVERAGE: 1
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
     steps:
       - uses: actions/checkout@v7
@@ -45,3 +63,12 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: bundle exec rspec
+      - name: Upload coverage report
+        if: >
+          matrix.upload &&
+          (github.event_name == 'pull_request' || github.event_name == 'push')
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        with:
+          file: coverage/coverage.xml
