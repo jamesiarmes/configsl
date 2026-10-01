@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.3'
 
-  s.add_dependency 'facets', '~> 3.1'
+  s.add_dependency 'facets', '>= 3.1', '< 5.0'
 end
